@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Previous head content remains the same -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Campionat - Monitorizare Scor</title>
+<style>
+/* Previous styles remain the same */
+/* All the previous CSS styles stay exactly the same */
+:root {
+  --oak-light: #E8DCC4;
+  --oak-medium: #D4C4A8;
+  --oak-dark: #B4A089;
+  --black-soft: #2C2C2C;
+  --black-accent: #1A1A1A;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, var(--black-soft) 0%, var(--oak-dark) 100%) fixed;
+  min-height: 100vh;
+  display: flex;
+  padding: 0.5rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  background: var(--oak-light);
+  border-radius: 12px;
+  padding: 0.75rem;
+}
+
+.title {
+  font-size: 3rem;
+  margin-top: 1.1rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(45deg, var(--black-soft) 0%, var(--oak-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  line-height: 1.2;
+  font-weight: bold;
+}
+
+.game-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--oak-medium), var(--oak-dark));
+  padding: 0.5rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+
+
+.current-turn {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1.1rem;
+}
+
+.suggestions-container {
+  background: linear-gradient(135deg, var(--oak-medium), var(--oak-dark));
+  border-radius: 8px;
+  padding: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.suggestions-title {
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.suggestions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.25rem;
+}
+
+.suggestion {
+  background: var(--oak-light);
+  padding: 0.4rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.score-display {
+  background: linear-gradient(135deg, #d4c4a8d3, var(--oak-medium));
+  padding: 0.5rem;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.quick-scores {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.quick-score {
+  background: var(--black-soft);
+  color: var(--oak-light);
+  border: none;
+  padding: 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.25rem;
+}
+
+.key {
+  background: var(--black-soft);
+  color: var(--oak-light);
+  border: none;
+  padding: 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.key:active, .quick-score:active {
+  transform: scale(0.98);
+}
+
+/* Add visual feedback for keyboard focus */
+.key:focus, .quick-score:focus {
+  outline: 2px solid var(--oak-dark);
+  outline-offset: 2px;
+}
+</style>
+</head>
+<body>
+<!-- Previous body content remains exactly the same until the script -->
+<div class="container">
+  <div class="title">Campionat - Monitorizare Scor</div>
+  
+  <div class="game-info">
+    <div>Scor țintă: 301</div>
+    <div>j: 0 | n: 0</div>
+  </div>
+
+  <div class="current-turn">La rând: j</div>
+  
+  <div class="suggestions-container">
+    <div class="suggestions-title">Posibilități pentru 301 puncte</div>
+    <div class="suggestions">
+      <div class="suggestion">200 → 101</div>
+      <div class="suggestion">301</div>
+    </div>
+  </div>
+
+  <div class="score-display" id="scoreDisplay">0</div>
+  
+  <div class="quick-scores">
+    <button class="quick-score" onclick="addQuickScore(60)">60</button>
+    <button class="quick-score" onclick="addQuickScore(40)">40</button>
+    <button class="quick-score" onclick="addQuickScore(38)">38</button>
+    <button class="quick-score" onclick="addQuickScore(25)">25</button>
+  </div>
+  
+  <div class="keypad">
+    <button class="key" onclick="addNumber(1)">1</button>
+    <button class="key" onclick="addNumber(2)">2</button>
+    <button class="key" onclick="addNumber(3)">3</button>
+    <button class="key" onclick="addNumber(4)">4</button>
+    <button class="key" onclick="addNumber(5)">5</button>
+    <button class="key" onclick="addNumber(6)">6</button>
+    <button class="key" onclick="addNumber(7)">7</button>
+    <button class="key" onclick="addNumber(8)">8</button>
+    <button class="key" onclick="addNumber(9)">9</button>
+    <button class="key" onclick="clearScore()">C</button>
+    <button class="key" onclick="addNumber(0)">0</button>
+    <button class="key" onclick="submitCustomScore()">↵</button>
+  </div>
+</div>
+
+<script>
+let currentInput = '';
+
+function addNumber(num) {
+  if (currentInput.length < 3) {
+    currentInput += num;
+    updateScoreDisplay();
+  }
+}
+
+function clearScore() {
+  currentInput = '';
+  updateScoreDisplay();
+}
+
+function updateScoreDisplay() {
+  const display = document.getElementById('scoreDisplay');
+  display.textContent = currentInput || '0';
+}
+
+function addQuickScore(score) {
+  currentInput = score.toString();
+  updateScoreDisplay();
+}
+
+function submitCustomScore() {
+  if (currentInput === '') return;
+  // Your existing score submission logic here
+  clearScore();
+}
+
+// Add keyboard support
+document.addEventListener('keydown', function(event) {
+  // Prevent default behavior for Enter and Backspace to avoid page navigation
+  if (event.key === 'Enter' || event.key === 'Backspace') {
+    event.preventDefault();
+  }
+  
+  // Handle number keys (both main keyboard and numpad)
+  if (/^[0-9]$/.test(event.key)) {
+    addNumber(parseInt(event.key));
+  }
+  
+  // Handle Enter key for submission
+  if (event.key === 'Enter') {
+    submitCustomScore();
+  }
+  
+  // Handle Backspace or Delete for clearing
+  if (event.key === 'Backspace' || event.key === 'Delete') {
+    clearScore();
+  }
+  
+  // Handle quick score shortcuts
+  switch (event.key) {
+    case 'q':
+    case 'Q':
+      addQuickScore(60);
+      break;
+    case 'w':
+    case 'W':
+      addQuickScore(40);
+      break;
+    case 'e':
+    case 'E':
+      addQuickScore(38);
+      break;
+    case 'r':
+    case 'R':
+      addQuickScore(25);
+      break;
+  }
+});
+</script>
+</body>
+</html>
